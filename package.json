@@ -1,0 +1,20 @@
+{
+	"name": "dog-adoption-platform-api",
+	"version": "1.0.0",
+	"description": "Dog Adoption Platform API",
+	"main": "app.js",
+	"scripts": {
+		"start": "node app.js",
+		"dev": "nodemon app.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^6.0.0",
+		"express": "^5.1.0",
+		"mongoose": "^8.18.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.0"
+	}
+}
