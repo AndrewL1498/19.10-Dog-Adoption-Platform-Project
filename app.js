@@ -1,11 +1,13 @@
 
 
 const express = require('express');
-const app = express();
 const routes = require('./routes/routes');
+const { connectDb } = require('./db');
+
+const app = express();
+// const { connectToDb, getDb } = require('./db');
 
 console.log("Routes file loaded");
-
 
 app.use(express.json()); //middleware to parse incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // url encoded parses incoming form submissions. extended: true allows for nested objects
@@ -16,9 +18,14 @@ app.set('views', `${__dirname}/views`); // the first argument views is the name 
 
 app.use('/', routes);
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+// Database connection
+connectDb()
+  .then(() => {
+    const PORT = 3000;
+    app.listen(PORT, () => {
+      console.log(`Server running at http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => console.error("Server not started due to DB connection error:", err));
 
 

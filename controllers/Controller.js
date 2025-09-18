@@ -13,6 +13,7 @@ const signup = {
     res.render("signup");
   },
   post: (req, res) => {
+    // const { username, password } = req.body;
     res.send("new signup");
   }
 };
@@ -22,13 +23,14 @@ const login = {
     res.render("login");
   },
   post: (req, res) => {
+    console.log(req.body);
     res.send("user logged in");
   }
 };
 
 const logout = {
   get: (req, res) => {
-    res.render("user logged out");
+    res.send("user logged out");
   }
 };
 
