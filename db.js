@@ -1,15 +1,12 @@
 const dotenv = require("dotenv");
 dotenv.config(); // Load environment variables from .env file
 const mongoose = require("mongoose");
-const { DB_PASSWORD } = process.env;
+const { MONGODB_URI } = process.env;
 
 module.exports = {
   connectDb: async () => {
     try {
-      await mongoose.connect(`mongodb+srv://AndrewL1498:${DB_PASSWORD}@dogsdb.au7kucq.mongodb.net/DogDb?retryWrites=true&w=majority`, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      });
+      await mongoose.connect(MONGODB_URI);
       console.log("Connected to MongoDB via Mongoose");
     } catch (err) {
       console.error("Failed to connect to MongoDB:", err);
