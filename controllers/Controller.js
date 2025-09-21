@@ -2,6 +2,7 @@
 
 // controllers/authController.js
 const User = require("../models/UserModel");
+const { generateToken, attachTokenToCookie } = require("../helpers/jwt");
 
 const home = {
     get: (req, res) => {
@@ -45,9 +46,25 @@ const login = {
   get: (req, res) => {
     res.render("login");
   },
-  post: (req, res) => {
-    console.log(req.body);
-    res.send("user logged in");
+  post: async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const user = await User.findOne({ username });
+      const userPassword = await user.isValidPassword(password);
+
+      if (!user || !userPassword) {
+        return res.status(401).json({ error: "Invalid username or password" });
+      }
+
+      const token = generateToken(user);
+      attachTokenToCookie(res, token);
+
+      res.status(200).json({ message: "Login successful" });
+
+   } catch (error) {
+      console.error("Error in login:", error);
+      res.status(500).json({ error: "Internal server error" });
+   }
   }
 };
 
@@ -57,4 +74,4 @@ const logout = {
   }
 };
 
-module.exports = { home,signup, login, logout };
+module.exports = { home, signup, login, logout };

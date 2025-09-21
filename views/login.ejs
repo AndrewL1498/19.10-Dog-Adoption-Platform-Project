@@ -1,5 +1,5 @@
 <h1>Login</h1>
-<form action="/login" method="POST">
+<form id="loginForm">
   <div>
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
@@ -10,5 +10,11 @@
     <input type="password" id="password" name="password" required>
   </div>
 
+  <div id="loginError" style="color: red; margin-bottom: 1rem;"></div>
+
   <button type="submit">Log In</button>
 </form>
+
+<script src="/js/login.js"></script>
+
+
