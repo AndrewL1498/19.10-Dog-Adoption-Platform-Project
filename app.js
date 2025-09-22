@@ -1,9 +1,10 @@
 
 
 const express = require('express');
-const routes = require('./routes/routes');
+const authRoutes = require('./routes/authRoutes');
 const { connectDb } = require('./db');
 const cookieParser = require('cookie-parser');
+const dogRoutes = require('./routes/dogRoutes');
 
 const app = express();
 // const { connectToDb, getDb } = require('./db');
@@ -19,7 +20,8 @@ app.use(express.static('public')); // Serve static files from the "public" direc
 app.set('view engine', 'ejs'); //Tells Express: when you call res.render("something"), look for an .ejs file and process it through the EJS template engine. says to use the ejs as the view engine
 app.set('views', `${__dirname}/views`); // the first argument views is the name of the setting we are configuring, the second argument is the path to the views directory
 
-app.use('/', routes);
+app.use('/', authRoutes);
+app.use('/dogs', dogRoutes);
 
 // Database connection
 connectDb()
@@ -32,3 +34,5 @@ connectDb()
   .catch(err => console.error("Server not started due to DB connection error:", err));
 
 
+//Questions I need to answer:
+// 1. How do I only allow authenticated users to create a new dog, because it looks like my postman request created a new dog
