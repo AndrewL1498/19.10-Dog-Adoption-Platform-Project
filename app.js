@@ -32,7 +32,3 @@ connectDb()
     });
   })
   .catch(err => console.error("Server not started due to DB connection error:", err));
-
-
-//Questions I need to answer:
-// 1. How do I only allow authenticated users to create a new dog, because it looks like my postman request created a new dog

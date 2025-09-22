@@ -1,7 +1,7 @@
 const Dog = require("../models/DogModel");
 
 const dogController = {
-    get: (req, res) => {
+    getNewDogForm: (req, res) => {
         res.render("newDog");
     },
     
@@ -31,6 +31,18 @@ const dogController = {
             res.status(500).json({ error: "Internal server error" });
         }
     },
+
+    renderDogList: async (req, res) => {
+        try {
+            const dogs = await Dog.find(); //In mongoose, find() with no arguments returns all documents in the collection
+            res.render("dogs", { dogs }); // res.render takes two arguments: the name of the view (dogs.ejs) and an object containing data to be passed to the view
+
+        } catch (error) {
+            console.error("Error rendering dog list:", error);
+            res.status(500).send("Internal server error");
+        }
+    }
+
 };
 
 module.exports = dogController;

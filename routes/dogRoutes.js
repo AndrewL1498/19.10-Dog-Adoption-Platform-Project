@@ -5,8 +5,8 @@ const dogRoutes = express.Router();
 const requireAuth = require("../helpers/requireAuth");
 const dogController = require("../controllers/dogController");
 
-dogRoutes.get("/", dogController.getDogs);
-dogRoutes.get("/newdog", dogController.get);
+dogRoutes.get("/", dogController.renderDogList);
+dogRoutes.get("/newdog", dogController.getNewDogForm);
 dogRoutes.post("/newdog", requireAuth, dogController.createDog);
 
 module.exports = dogRoutes;

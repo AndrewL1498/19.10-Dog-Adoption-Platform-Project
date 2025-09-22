@@ -15,6 +15,12 @@ const dogSchema = new mongoose.Schema({
         maxlength: [300, "Description cannot exceed 300 characters"]
     },
 
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+
 });
 
 const Dog = mongoose.model('Dog', dogSchema);

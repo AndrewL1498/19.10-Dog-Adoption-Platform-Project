@@ -1,1 +1,13 @@
 <h1>Add New Dog</h1>
+<form action="/newdog" method="POST">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+
+  <div>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" required>
+  </div>
+
+  <button type="submit">Add Dog</button>

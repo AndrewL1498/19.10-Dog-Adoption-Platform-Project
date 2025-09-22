@@ -1,0 +1,16 @@
+<h1>Dog List</h1>
+
+<a href="/dogs/newdog">Add a New Dog</a>
+
+<% if (dogs.length === 0) { %>
+  <p>No dogs available yet.</p>
+<% } else { %>
+<ul>
+  <% dogs.forEach(dog => { %>
+    <li style="margin-bottom: 20px;">
+      <strong>Name:</strong> <%= dog.name %> <br>
+      <strong>Description:</strong> <%= dog.description %>
+    </li>
+  <% }) %>
+</ul>
+<% } %>
