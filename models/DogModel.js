@@ -16,10 +16,22 @@ const dogSchema = new mongoose.Schema({
     },
 
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        type: mongoose.Schema.Types.ObjectId, // This field will store the ObjectId of the user who created the dog profile
+        ref: 'User', // Reference to the User model
+        required: true // Owner is required
     },
+
+    adoptedBy: {
+        type: mongoose.Schema.Types.ObjectId, // This field will store the ObjectId of the user who adopted the dog
+        ref: 'User', // Reference to the User model
+        default: null // Default is null, meaning the dog is not adopted yet
+    },
+
+    thankYouMessage: {
+        type: String,
+        maxlength: [500, "Thank you message cannot exceed 500 characters"],
+        default: ""
+    }
 
 });
 

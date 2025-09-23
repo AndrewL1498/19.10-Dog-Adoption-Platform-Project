@@ -41,8 +41,34 @@ const dogController = {
             console.error("Error rendering dog list:", error);
             res.status(500).send("Internal server error");
         }
-    }
+    },
 
+    adoptDog: async (req, res) => {
+        try {
+            const dogId = req.params.id;
+            const userId = req.user._id;
+
+            const dog = await Dog.findById(dogId);
+            if (!dog) {
+                return res.status(404).json({ error: "Dog not found" });
+            }
+
+            if (dog.adoptedBy) {
+                return res.status(400).json({ error: "Dog has already been adopted" });
+            }
+
+            if (dog.owner.equals(userId)) {
+                return res.status(400).json({ error: "You cannot adopt your own dog" });
+            }
+
+            dog.adoptedBy = userId;
+            await dog.save();
+            res.status(200).json({ message: "Dog adopted successfully", dog });
+        } catch (error) {
+            console.error("Error adopting dog:", error);
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
 };
 
 module.exports = dogController;
