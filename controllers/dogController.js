@@ -8,6 +8,7 @@ const dogController = {
     createDog: async (req, res) => {
         try {
             const { name, description } = req.body;
+            console.log("req.userId:", req.user._id);
 
             if (!name?.trim() || !description?.trim()) {
                 return res.status(400).json({ error: "Name and description are required" });
@@ -15,7 +16,8 @@ const dogController = {
             const newDog = new Dog({ name, description, owner: req.user._id });
 
             await newDog.save();
-            res.status(201).json({ message: "Dog profile created successfully", dog: newDog });
+            // res.status(201).json({ message: "Dog profile created successfully", dog: newDog });
+            res.redirect("/dogs");
         } catch (error) {
             console.error("Error creating dog profile:", error);
             res.status(500).json({ error: "Internal server error" });
@@ -45,6 +47,9 @@ const dogController = {
 
     adoptDog: async (req, res) => {
         try {
+            console.log("req.user:", req.user);
+            console.log("req.params.id:", req.params.id);
+
             const dogId = req.params.id;
             const userId = req.user._id;
 
@@ -57,12 +62,13 @@ const dogController = {
                 return res.status(400).json({ error: "Dog has already been adopted" });
             }
 
-            if (dog.owner.equals(userId)) {
+            if (dog.owner.equals(userId)) { // equals is a method that converts a string or ObjectId to ObjectId and compares them
                 return res.status(400).json({ error: "You cannot adopt your own dog" });
             }
 
             dog.adoptedBy = userId;
-            await dog.save();
+
+            await dog.save(); // Save the updated dog document to the database
             res.status(200).json({ message: "Dog adopted successfully", dog });
         } catch (error) {
             console.error("Error adopting dog:", error);
