@@ -1,4 +1,4 @@
-const dotenv = require("dotenv");
+const dotenv = require("dotenv"); // Add this line to import dotenv
 dotenv.config(); // Load environment variables from .env file
 const mongoose = require("mongoose");
 const { MONGODB_URI } = process.env;

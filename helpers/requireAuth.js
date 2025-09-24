@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 function requireAuth(req, res, next) {
     const token = req.cookies.token; // Assuming the token is stored in a cookie named "token"
-    console.log("req.user:", req.user);
     if (!token) { // No token found, user is not authenticated
         return res.status(401).json({ error: "Authentication required" });
     }

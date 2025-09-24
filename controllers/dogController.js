@@ -8,7 +8,6 @@ const dogController = {
     createDog: async (req, res) => {
         try {
             const { name, description } = req.body;
-            console.log("req.userId:", req.user._id);
 
             if (!name?.trim() || !description?.trim()) {
                 return res.status(400).json({ error: "Name and description are required" });
