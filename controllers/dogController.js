@@ -68,7 +68,8 @@ const dogController = {
             dog.adoptedBy = userId;
 
             await dog.save(); // Save the updated dog document to the database
-            res.status(200).json({ message: "Dog adopted successfully", dog });
+            res.redirect("/adoptedDogs");
+            // res.status(200).json({ message: "Dog adopted successfully", dog });
         } catch (error) {
             console.error("Error adopting dog:", error);
             res.status(500).json({ error: "Internal server error" });

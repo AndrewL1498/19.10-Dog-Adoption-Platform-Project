@@ -29,7 +29,8 @@ const signup = {
 
       const newUser = new User({ username, password });
       await newUser.save();
-      res.status(201).json({message: "User registered successfully"});
+      // res.status(201).json({message: "User registered successfully"});
+      res.redirect("/login");
     } catch (error) {
 
       if (error.name === 'ValidationError') {

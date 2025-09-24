@@ -1,17 +1,14 @@
-<h1>Dog List</h1>
-
-<button onClick="window.location.href='/dogs/newdog'">Add a New Dog</button>
+<h1>Adopted Dogs</h1>
 
 <% if (dogs.length === 0) { %>
-  <p>No dogs available yet.</p>
+  <p>No dogs adopted yet.</p>
 <% } else { %>
 <ul>
   <% dogs.forEach(dog => { %>
     <li style="margin-bottom: 20px;">
       <strong>Name:</strong> <%= dog.name %> <br>
       <strong>Description:</strong> <%= dog.description %>
-      <button onClick="window.location.href='/dogs/<%= dog._id %>/adopt'">Adopt This Dog</button>
-
+      <button onClick="window.location.href='/dogs/<%= dog.id %>'">View Details</button>
     </li>
   <% }) %>
 </ul>
