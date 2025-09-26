@@ -10,6 +10,7 @@ dogRoutes.get("/newdog", dogController.getNewDogForm);
 dogRoutes.post("/newdog", requireAuth, dogController.createDog);
 dogRoutes.get("/:id/adoptDogForm", requireAuth, dogController.getAdopt)
 dogRoutes.post("/:id/adopt", requireAuth, dogController.adoptDog);
-dogRoutes.get("/adoptedDogs", requireAuth, dogController.adoptedDogs)
+dogRoutes.get("/dogsIHaveAdopted", requireAuth, dogController.adoptedDogs)
+dogRoutes.get("/myDogsThatHaveBeenAdopted", requireAuth, dogController.myDogs)
 
 module.exports = dogRoutes;

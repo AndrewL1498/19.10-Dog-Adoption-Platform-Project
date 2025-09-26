@@ -1,0 +1,18 @@
+<h1>Dogs I Have Adopted</h1>
+
+<% if (dogs.length === 0) { %>
+  <p>You haven’t adopted any dogs yet.</p>
+<% } else { %>
+  <ul>
+    <% dogs.forEach(dog => { %>
+      <li style="margin-bottom: 20px;">
+        <strong>Name:</strong> <%= dog.name %> <br>
+        <strong>Description:</strong> <%= dog.description %> <br>
+        <strong>Original Owner:</strong> <%= dog.owner ? dog.owner.username : "Unknown" %> <br>
+        <% if (dog.thankYouMessage) { %>
+          <strong>Your Thank You Message:</strong> <%= dog.thankYouMessage %>
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>

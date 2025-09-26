@@ -35,6 +35,6 @@ const dogSchema = new mongoose.Schema({
 
 });
 
-const Dog = mongoose.model('Dog', dogSchema);
+const Dog = mongoose.model('Dog', dogSchema); //a mongoose model is like a series of functions you can use to engage with the database. Mongoose does automatic lower casing and pluralization of the model name (Dogs in this case) and look for a database that matches, aka "dogs". dogschema tells mongoose the structure of my documents
 
 module.exports = Dog;
