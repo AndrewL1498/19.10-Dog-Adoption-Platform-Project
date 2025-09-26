@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 function generateToken(user) {
     return jwt.sign(
-        { _id: user._id, username: user.username }, // store user id and username in the token payload
+        { _id: user._id, username: user.username }, // store user id and username in the token payload. (User._id is a mongoose ObjectId in the database and automatically gets converted to a string when stored in the JWT)
         process.env.JWT_SECRET, // use a strong secret key from environment variables
         { expiresIn: '24h' } // token expiration time
     );

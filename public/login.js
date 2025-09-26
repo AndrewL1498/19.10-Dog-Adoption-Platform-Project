@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       errorEl.textContent = ""; // clear any previous error messages on successful login
-      alert("Login successful!"); // display a success message
+      // alert("Login successful!"); // display a success message
       window.location.href = "/"; // tells the browser to navigate to the dashboard page after successful login
     } catch (err) {
       console.error("Login error:", err);

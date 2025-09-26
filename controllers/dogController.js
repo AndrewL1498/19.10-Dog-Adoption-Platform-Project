@@ -35,12 +35,27 @@ const dogController = {
 
     renderDogList: async (req, res) => {
         try {
-            const dogs = await Dog.find(); //In mongoose, find() with no arguments returns all documents in the collection
+            const dogs = await Dog.find().populate('owner'); //In mongoose, find() with no arguments returns all documents in the collection
             res.render("dogs", { dogs }); // res.render takes two arguments: the name of the view (dogs.ejs) and an object containing data to be passed to the view
 
         } catch (error) {
             console.error("Error rendering dog list:", error);
             res.status(500).send("Internal server error");
+        }
+    },
+
+    getAdopt: async (req, res) => {
+        try{
+            const dogId = req.params.id;
+            const dog = await Dog.findById(dogId);
+            if(!dog){
+                return res.status(404).send("Dog not found");
+            }
+
+        res.render("adoptDogForm", { dog });
+        } catch(error) {
+            console.error(error);
+            res.status(500).send("Error loading adoption form");
         }
     },
 
@@ -61,19 +76,24 @@ const dogController = {
                 return res.status(400).json({ error: "Dog has already been adopted" });
             }
 
-            if (dog.owner.equals(userId)) { // equals is a method that converts a string or ObjectId to ObjectId and compares them
+            if (dog.owner.toString() === userId.toString()) {
                 return res.status(400).json({ error: "You cannot adopt your own dog" });
             }
 
             dog.adoptedBy = userId;
+            dog.thankYouMessage = req.body.thankYouMessage || "";
 
             await dog.save(); // Save the updated dog document to the database
-            res.redirect("/adoptedDogs");
+            res.redirect("/dogs/adoptedDogs");
             // res.status(200).json({ message: "Dog adopted successfully", dog });
         } catch (error) {
             console.error("Error adopting dog:", error);
             res.status(500).json({ error: "Internal server error" });
         }
+    },
+
+    adoptedDogs: async (req, res) => {
+        res.render("adoptedDogs");
     }
 };
 

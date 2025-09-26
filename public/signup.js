@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       errorEl.textContent = "";
-      alert("Signup successful! Please log in.");
+      // alert("Signup successful! Please log in.");
       window.location.href = "/login"; // redirect after success
     } catch (err) {
       console.error("Signup error:", err);

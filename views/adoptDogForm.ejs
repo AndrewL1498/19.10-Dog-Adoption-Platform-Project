@@ -1,2 +1,10 @@
-<h1>Adopt a Dog</h1>
+<h1>Adopt <%= dog.name %></h1>
 
+<form action="/dogs/<%= dog._id %>/adopt" method="POST">
+  <div>
+    <h2 for="thankYouMessage">Message to Previous Owner:</h2>
+    <textarea id="thankYouMessage" name="thankYouMessage" rows="5" style="width:500px" placeholder="Write a kind note..." required></textarea>
+  </div>
+
+  <button type="submit">Adopt Dog</button>
+</form>

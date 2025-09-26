@@ -2,16 +2,21 @@
 
 <button onClick="window.location.href='/dogs/newdog'">Add a New Dog</button>
 
-<% if (dogs.length === 0) { %>
+<% 
+// Filter dogs that haven't been adopted
+const availableDogs = dogs.filter(dog => !dog.adoptedBy);
+%>
+
+<% if (availableDogs.length === 0) { %>
   <p>No dogs available yet.</p>
 <% } else { %>
 <ul>
-  <% dogs.forEach(dog => { %>
+  <% availableDogs.forEach(dog => { %>
     <li style="margin-bottom: 20px;">
       <strong>Name:</strong> <%= dog.name %> <br>
       <strong>Description:</strong> <%= dog.description %>
-      <button onClick="window.location.href='/dogs/<%= dog._id %>/adopt'">Adopt This Dog</button>
-
+      <strong>Owner:</strong> <%= dog.owner ? dog.owner.username : "Unknown" %>
+      <button onClick="window.location.href='/dogs/<%= dog._id %>/adoptDogForm'">Adopt This Dog</button>
     </li>
   <% }) %>
 </ul>
