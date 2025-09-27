@@ -11,6 +11,10 @@ dogRoutes.post("/newdog", requireAuth, dogController.createDog);
 dogRoutes.get("/:id/adoptDogForm", requireAuth, dogController.getAdopt)
 dogRoutes.post("/:id/adopt", requireAuth, dogController.adoptDog);
 dogRoutes.get("/dogsIHaveAdopted", requireAuth, dogController.adoptedDogs)
-dogRoutes.get("/myDogsThatHaveBeenAdopted", requireAuth, dogController.myDogs)
+dogRoutes.post("/:id/remove", requireAuth, dogController.removeDog)
+dogRoutes.get("/mydogs", requireAuth, dogController.myDogs)
+dogRoutes.get("/myRegisteredDogs", requireAuth, dogController.allMyRegisteredDogs)
+dogRoutes.get("/myRegisteredDogs/adopted", requireAuth, dogController.allMyRegisteredDogs)
+dogRoutes.get("/myRegisteredDogs/available", requireAuth, dogController.allMyRegisteredDogs)
 
 module.exports = dogRoutes;

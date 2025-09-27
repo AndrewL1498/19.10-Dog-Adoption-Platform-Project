@@ -84,7 +84,7 @@ const dogController = {
             dog.thankYouMessage = req.body.thankYouMessage || "";
 
             await dog.save(); // Save the updated dog document to the database
-            res.redirect("/dogs/adoptedDogs");
+            res.redirect("/dogs/dogsIHaveAdopted");
             // res.status(200).json({ message: "Dog adopted successfully", dog });
         } catch (error) {
             console.error("Error adopting dog:", error);
@@ -104,22 +104,32 @@ const dogController = {
 
     },
 
-    myDogs: async (req, res) => {
-    try {
-        const ownerId = req.user._id;
-        const myDogs = await Dog.find({ owner: ownerId, adoptedBy: { $ne: null } }) //Mongo DB use $ne as an operator for "not equal"
-                                .populate("adoptedBy"); // Optional, to show adopter's username
-        res.render("myDogsThatHaveBeenAdopted", { dogs: myDogs }); //passes myDogs object to the ejs template with the key of dogs
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error loading your dogs");
+allMyRegisteredDogs: async (req, res) => {
+  try {
+    const ownerId = req.user._id;
+    let filter = { owner: ownerId };
+
+    if (req.path.endsWith("/adopted")) {
+      filter.adoptedBy = { $ne: null }; // Only adopted dogs
+    } else if (req.path.endsWith("/available")) {
+      filter.adoptedBy = null; // Only available dogs
     }
+
+    // Populate the adoptedBy field to get the adopter's user document
+    const myDogs = await Dog.find(filter).populate("adoptedBy", "username"); 
+    // Only fetch the username from the adopter document
+
+    res.render("myRegisteredDogs", { dogs: myDogs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error loading your dogs");
+  }
 },
 
 removeDog: async (req, res) => {
   try {
-    const ownerId = req.user._id;           // Logged-in user
-    const dogId = req.params.id;            // Dog ID from the URL
+    const ownerId = req.user._id;// Logged-in user
+    const dogId = req.params.id;// Dog ID from the URL
 
     // Find the dog and make sure the owner matches
     const dog = await Dog.findOne({ _id: dogId, owner: ownerId });
@@ -131,15 +141,16 @@ removeDog: async (req, res) => {
     // Delete the dog
     await Dog.deleteOne({ _id: dogId });
 
-    // Redirect or send JSON depending on how you’re handling front-end
     res.redirect("/dogs"); // back to dog list
-    // OR: res.status(200).json({ message: "Dog removed successfully" });
   } catch (error) {
     console.error("Error removing dog:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+},
 
+myDogs: async (req, res) => {
+    res.render("myDogs")
+}
 
 };
 
