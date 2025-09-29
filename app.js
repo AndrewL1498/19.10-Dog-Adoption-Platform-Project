@@ -5,6 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const { connectDb } = require('./db');
 const cookieParser = require('cookie-parser');
 const dogRoutes = require('./routes/dogRoutes');
+const ExpressError = require('./helpers/ExpressError');
 
 const app = express();
 // const { connectToDb, getDb } = require('./db');
@@ -22,6 +23,31 @@ app.set('views', `${__dirname}/views`); // the first argument views is the name 
 
 app.use('/', authRoutes);
 app.use('/dogs', dogRoutes);
+
+app.use((req, res, next) => {
+  const err = new ExpressError("Not Found", 404);
+  return next(err);
+});
+
+// General error handler
+app.use((err, req, res, next) => {
+  // If it's a validation error from Mongoose, convert it to 400
+  if (err.name === "ValidationError") err.status = 400;
+
+  res.status(err.status || 500);
+
+  // You can choose JSON or HTML response depending on your API vs EJS usage
+  if (req.originalUrl.startsWith("/dogs") || req.originalUrl.startsWith("/")) {
+    // EJS rendering
+    return res.render("error", { error: err });
+  } else {
+    // JSON API
+    return res.json({
+      error: err,
+      message: err.message
+    });
+  }
+});
 
 // Database connection
 connectDb()

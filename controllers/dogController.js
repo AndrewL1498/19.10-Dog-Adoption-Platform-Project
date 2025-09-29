@@ -112,8 +112,10 @@ allMyRegisteredDogs: async (req, res) => {
 
     if (req.path.endsWith("/adopted")) {
       filter.adoptedBy = { $ne: null }; // Only adopted dogs
+      filter.status = { $ne: "Removed" }; // Exclude removed dogs
     } else if (req.path.endsWith("/available")) {
       filter.adoptedBy = null; // Only available dogs
+      filter.status = { $ne: "Removed" };
     } else if (req.path.endsWith("/removed")) {
       filter.status = "Removed"; // Only available dogs
     }
