@@ -4,7 +4,7 @@
 
 <% 
 // Filter dogs that haven't been adopted
-const availableDogs = dogs.filter(dog => !dog.adoptedBy);
+const availableDogs = dogs.filter(dog => !dog.adoptedBy && dog.status !== 'Removed');
 %>
 
 <% if (availableDogs.length === 0) { %>
@@ -17,7 +17,7 @@ const availableDogs = dogs.filter(dog => !dog.adoptedBy);
       <strong>Description:</strong> <%= dog.description %>
       <strong>Owner:</strong> <%= dog.owner ? dog.owner.username : "Unknown" %>
       <button onClick="window.location.href='/dogs/<%= dog._id %>/adoptDogForm'">Adopt This Dog</button>
-      <form action="/dogs/<%= dog._id %>/remove" method="Post" style="display:inline;">
+      <form action="/dogs/<%= dog._id %>/remove" method="post" style="display:inline;">
         <button type="submit">Remove Dog</button>
       </form>
     </li>

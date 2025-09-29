@@ -82,6 +82,7 @@ const dogController = {
 
             dog.adoptedBy = userId;
             dog.thankYouMessage = req.body.thankYouMessage || "";
+            dog.status = 'Adopted'; // Update status to 'Adopted'
 
             await dog.save(); // Save the updated dog document to the database
             res.redirect("/dogs/dogsIHaveAdopted");
@@ -113,6 +114,8 @@ allMyRegisteredDogs: async (req, res) => {
       filter.adoptedBy = { $ne: null }; // Only adopted dogs
     } else if (req.path.endsWith("/available")) {
       filter.adoptedBy = null; // Only available dogs
+    } else if (req.path.endsWith("/removed")) {
+      filter.status = "Removed"; // Only available dogs
     }
 
     // Populate the adoptedBy field to get the adopter's user document
@@ -138,8 +141,8 @@ removeDog: async (req, res) => {
       return res.status(404).json({ error: "Dog not found or you are not the owner" });
     }
 
-    // Delete the dog
-    await Dog.deleteOne({ _id: dogId });
+    dog.status = 'Removed'; // Soft delete by setting status to 'removed'
+    await dog.save();
 
     res.redirect("/dogs"); // back to dog list
   } catch (error) {

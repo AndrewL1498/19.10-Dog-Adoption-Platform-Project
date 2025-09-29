@@ -3,6 +3,7 @@
 <button onclick="window.location.href='/dogs/myRegisteredDogs/adopted'">Adopted</button>
 <button onclick="window.location.href='/dogs/myRegisteredDogs/available'">Available</button>
 <button onclick="window.location.href='/dogs/myRegisteredDogs'">All</button>
+<button onclick="window.location.href='/dogs/myRegisteredDogs/removed'">Removed</button>
 
 <% if (dogs.length === 0) { %>
   <p>No dogs found for this filter.</p>
@@ -11,7 +12,7 @@
     <% dogs.forEach(dog => { %>
       <li style="margin-bottom: 20px;">
         <strong>Name:</strong> <%= dog.name %><br>
-        <strong>Status:</strong> <%= dog.adoptedBy ? "Adopted" : "Available" %><br>
+        <strong>Status:</strong> <%= dog.status.charAt(0).toUpperCase() + dog.status.slice(1) %><br>
         <strong>Adopted By:</strong> <%= dog.adoptedBy ? dog.adoptedBy.username : "-" %><br>
         <strong>Thank You Message:</strong> <%= dog.thankYouMessage || "-" %>
       </li>

@@ -16,5 +16,6 @@ dogRoutes.get("/mydogs", requireAuth, dogController.myDogs)
 dogRoutes.get("/myRegisteredDogs", requireAuth, dogController.allMyRegisteredDogs)
 dogRoutes.get("/myRegisteredDogs/adopted", requireAuth, dogController.allMyRegisteredDogs)
 dogRoutes.get("/myRegisteredDogs/available", requireAuth, dogController.allMyRegisteredDogs)
+dogRoutes.get("/myRegisteredDogs/removed", requireAuth, dogController.allMyRegisteredDogs)
 
 module.exports = dogRoutes;
