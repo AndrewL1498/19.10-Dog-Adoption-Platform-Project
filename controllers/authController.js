@@ -14,17 +14,17 @@ const signup = {
   get: (req, res) => {
     res.render("signup");
   },
-  post: async (req, res) => {
+  post: async (req, res, next) => {
     try {
       const { username, password } = req.body;
 
        if (!username?.trim() || !password?.trim()) { //The ? checks if username and password are not null or undefined before calling trim()
-      return res.status(400).json({ error: "Username and password are required" });
+      return next(new ExpressError("Username and password are required", 400));
     }
 
       const existingUser = await User.findOne({ username });
       if (existingUser) {
-        return res.status(409).json({error: "Username already exists"});
+        return next(new ExpressError("Username already exists", 409));
       }
 
       const newUser = new User({ username, password });
@@ -34,11 +34,11 @@ const signup = {
     } catch (error) {
 
       if (error.name === 'ValidationError') {
-        return res.status(400).json({error: error.message});
+        return next(new ExpressError(error.message, 400));
       }
 
       console.error("Error in signup:", error);
-      res.status(500).json({error: "Internal server error"});
+       next(error);
     }
   }
 };
@@ -54,7 +54,7 @@ const login = {
       const userPassword = await user.isValidPassword(password);
 
       if (!user || !userPassword) {
-        return res.status(401).json({ error: "Invalid username or password" });
+        return next(new ExpressError("Invalid username or password", 401));
       }
 
       const token = generateToken(user);
@@ -64,7 +64,7 @@ const login = {
 
    } catch (error) {
       console.error("Error in login:", error);
-      res.status(500).json({ error: "Internal server error" });
+      next(error);
    }
   }
 };

@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const { connectDb } = require('./db');
 const cookieParser = require('cookie-parser');
 const dogRoutes = require('./routes/dogRoutes');
-const ExpressError = require('./helpers/ExpressError');
+const ExpressError = require('./helpers/expressError');
 
 const app = express();
 // const { connectToDb, getDb } = require('./db');
@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
 
   // You can choose JSON or HTML response depending on your API vs EJS usage
-  if (req.originalUrl.startsWith("/dogs") || req.originalUrl.startsWith("/")) {
+  if (req.originalUrl.startsWith("/dogs")) {
     // EJS rendering
     return res.render("error", { error: err });
   } else {
