@@ -1,4 +1,6 @@
 const Dog = require("../models/DogModel");
+const ExpressError = require("../helpers/expressError");
+
 
 const dogController = {
     getNewDogForm: (req, res) => {

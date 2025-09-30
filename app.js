@@ -6,12 +6,19 @@ const { connectDb } = require('./db');
 const cookieParser = require('cookie-parser');
 const dogRoutes = require('./routes/dogRoutes');
 const ExpressError = require('./helpers/expressError');
+const cors = require("cors");
+
 
 const app = express();
-// const { connectToDb, getDb } = require('./db');
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+};
 
 console.log("Routes file loaded");
 
+app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(express.json()); //middleware to parse incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // url encoded parses incoming form submissions. extended: true allows for nested objects
 app.use(cookieParser()); //middleware to parse cookies from incoming requests
@@ -49,12 +56,4 @@ app.use((err, req, res, next) => {
   }
 });
 
-// Database connection
-connectDb()
-  .then(() => {
-    const PORT = 3000;
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
-    });
-  })
-  .catch(err => console.error("Server not started due to DB connection error:", err));
+module.exports = app;
