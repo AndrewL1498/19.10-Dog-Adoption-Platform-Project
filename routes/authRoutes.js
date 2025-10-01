@@ -9,7 +9,6 @@ authRoutes.get("/signup", signup.get);
 authRoutes.post("/signup", signup.post);
 authRoutes.get("/login", login.get);
 authRoutes.post("/login", login.post);
-authRoutes.get("/logout", logout.get);
 
 authRoutes.get("/test", (req, res) => {
   res.send("test route works");

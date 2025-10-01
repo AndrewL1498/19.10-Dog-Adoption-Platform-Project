@@ -72,10 +72,4 @@ const login = {
   }
 };
 
-const logout = {
-  get: (req, res) => {
-    res.send("user logged out");
-  }
-};
-
-module.exports = { home, signup, login, logout };
+module.exports = { home, signup, login };
