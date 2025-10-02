@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 // General error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => { //runs whenever next is called with an error
   // If it's a validation error from Mongoose, convert it to 400
   if (err.name === "ValidationError") err.status = 400;
 

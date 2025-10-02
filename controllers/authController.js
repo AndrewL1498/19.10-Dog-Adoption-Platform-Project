@@ -18,7 +18,6 @@ const signup = {
   post: async (req, res, next) => {
     try {
       const { username, password } = req.body;
-      console.log("Signup request body:", req.body);
 
        if (!username?.trim() || !password?.trim()) { //The ? checks if username and password are not null or undefined before calling trim()
       return res.status(400).json({ error: "Username and password are required" });
@@ -36,11 +35,9 @@ const signup = {
     } catch (error) {
 
       if (error.name === 'ValidationError') {
-        console.log("Validation error:", error.message);
         return res.status(400).json({ error: error.message });
       }
 
-      console.error("Error in signup:", error);
        return res.status(500).json({ error: "Internal server error" });
     }
   }
@@ -66,7 +63,6 @@ const login = {
       res.status(200).json({ message: "Login successful" });
 
    } catch (error) {
-      console.error("Error in login:", error);
       next(error);
    }
   }

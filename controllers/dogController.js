@@ -24,23 +24,12 @@ const dogController = {
         }
     },
 
-    getDogs: async (req, res, next) => {
-        try {
-            const dogs = await Dog.find();
-            res.status(200).json(dogs);
-        } catch (error) {
-            console.error("Error fetching dog profiles:", error);
-            next(error);
-        }
-    },
-
     renderDogList: async (req, res, next) => {
         try {
             const dogs = await Dog.find().populate('owner'); //In mongoose, find() with no arguments returns all documents in the collection
             res.render("dogs", { dogs }); // res.render takes two arguments: the name of the view (dogs.ejs) and an object containing data to be passed to the view
 
         } catch (error) {
-            console.error("Error rendering dog list:", error);
             next(error);
         }
     },
