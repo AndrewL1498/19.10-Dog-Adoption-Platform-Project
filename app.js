@@ -31,7 +31,7 @@ app.set('views', `${__dirname}/views`); // the first argument views is the name 
 app.use('/', authRoutes);
 app.use('/dogs', dogRoutes);
 
-app.use((req, res, next) => {
+app.use((req, res, next) => { // Only runs if no route matched
   const err = new ExpressError("Not Found", 404);
   return next(err);
 });

@@ -85,5 +85,64 @@ describe("Render dog list route", () => {
         expect(res.text).toMatch(/dog list/i); // Assuming the rendered page contains the word "dogs"
     });
 
+    test("Get /dogs handles errors", async () => {
+  // Make Dog.find throw an error
+  jest.spyOn(Dog, "find").mockImplementation(() => {
+    throw new Error("Database failure");
+  });
+
+  const res = await request(app).get("/dogs");
+
+  expect(res.status).toBe(500); // generic server error passed to error handler
+  expect(res.text).toMatch(/Database failure/i); // the error message should appear in the HTML
+
+  Dog.find.mockRestore();
+});
+
+
+describe("Testing getAdopt route", () => {
+  let testDog;
+
+  beforeEach(async () => {
+    
+    await User.deleteMany({});
+    await Dog.deleteMany({});
+
+    const userDoc = await new User(testUser).save();
+
+    const res = await request(app).post("/login").send(testUser);
+    authCookie = res.headers['set-cookie'];
+
+    
+    testDog = await new Dog({ name: "Buddy", description: "Some dog I've met before", owner: userDoc._id }).save();
+  });
+
+  afterEach(async () => {
+    await Dog.deleteMany({});
+  });
+
+  test("GET /:id/adoptDogForm should render adopt form for existing dog", async () => {
+    const res = await request(app)
+      .get(`/dogs/${testDog._id}/adoptDogForm`)
+      .set("Cookie", authCookie);
+
+    expect(res.status).toBe(200);
+    expect(res.text).toMatch(/adopt/i); // checks the adopt form rendered
+    expect(res.text).toMatch(/Buddy/i); // checks dog info appears
+  });
+
+  test("GET /:id/adoptDogForm should return 404 if dog not found", async () => {
+    const fakeId = new mongoose.Types.ObjectId();
+    const res = await request(app)
+      .get(`/dogs/${fakeId}/adoptDogForm`)
+      .set("Cookie", authCookie);
+
+    expect(res.status).toBe(404);
+    expect(res.text).toMatch(/Dog not found/i);
+  });
+});
+
+
+
     
   });
