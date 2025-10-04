@@ -51,8 +51,6 @@ const dogController = {
 
     adoptDog: async (req, res, next) => {
         try {
-            console.log("req.user:", req.user);
-            console.log("req.params.id:", req.params.id);
 
             const dogId = req.params.id;
             const userId = req.user._id;

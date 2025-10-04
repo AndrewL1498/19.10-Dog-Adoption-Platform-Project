@@ -16,8 +16,6 @@ const corsOptions = {
   credentials: true
 };
 
-console.log("Routes file loaded");
-
 app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(express.json()); //middleware to parse incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // url encoded parses incoming form submissions. extended: true allows for nested objects

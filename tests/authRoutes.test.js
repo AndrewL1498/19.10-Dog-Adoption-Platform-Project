@@ -5,8 +5,6 @@ const db = require("../db");
 const User = require("../models/UserModel");
 const mongoose = require("mongoose");
 
-console.log("Test DB URI:", process.env.MONGODB_URI_TEST);
-
 let testUser;
 
 beforeAll(async () => {
