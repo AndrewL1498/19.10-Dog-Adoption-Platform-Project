@@ -1,14 +1,53 @@
-The folder structure designed by our software architects ensures adherence to best practices:
+<h1>JWipe - Disk Sanitization</h1>
 
-- `controllers`: Contains the logic for handling incoming requests and returning responses to the client.
-- `models`: Defines the data models and interacts directly with the database.
-- `routes`: Manages the routes of your API, directing requests to the appropriate controller.
-- `middlewares`: Houses custom middleware functions, including authentication and rate limiting.
-- `.env`: Stores environment variables, such as database connection strings and the JWT secret.
-- `app.js`: The main entry point of your application, where you configure the Express app and connect all the pieces.
-- `db.js`: Manages the database connection.
-- `package.json`: Keeps track of npm packages and scripts necessary for your project.
+ ### [YouTube Demonstration](https://youtu.be/VxcgnWYQW2c)
 
-This structure provides a solid foundation for building a well-organized, scalable backend service. By separating concerns into dedicated directories and files, your project remains clean, navigable, and easier to debug and extend.
+<h2>Description</h2>
+This project focuses on utilizing an API to send and retrieve requests between the front end and the backend of a dog adoption database
+<br />
 
-View the rubric for this assessment [here](https://storage.googleapis.com/hatchways.appspot.com/employers/springboard/student_rubrics/Dog%20Adoption%20Platform%20Rubric.pdf)
+
+<h2>Languages and Utilities Used</h2>
+
+- <b>Express</b> 
+- <b>Javascript</b>
+- <b>Mongo DB</b>
+
+<h2>Environments Used </h2>
+
+- <b>Windows 10</b>
+
+<h2>Program walk-through:</h2>
+
+<p align="center">
+Launch the utility to land on the home page. From here, you can login, sign up, view dogs available for adoption, view dogs you have added, and view dogs you have adopted: <br/>
+<img src="https://i.imgur.com/kpt1kWY.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+First thing you will do is login or signup:  <br/>
+<img src="https://i.imgur.com/bHxpoZH.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Then view the dogs available for adoption. Here you can add a dog or remove a dog you have previously added: <br/>
+<img src="https://i.imgur.com/mr2BKsK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+Next, you can view the dogs you have added previously or dogs you have adopted:  <br/>
+<img src="https://i.imgur.com/WgM8qVM.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+When you choose to look at dogs you have added, you can narrow your search by looking at the dogs that are available, removed, or ones that have been adopted:  <br/>
+<img src="https://i.imgur.com/o6BTfgN.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<br />
+
+
+<!--
+ ```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
+--!>
